@@ -26,6 +26,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   #PORT config.vm.network "forwarded_port", guest: 7777, host: 7777
 
   config.vm.synced_folder "./${MODULE_NAME}", "/etc/puppet/modules/${MODULE_NAME}", owner: "root", group: "root"
+  config.vm.synced_folder "./manifests", "/etc/puppet/manifests", owner: "root", group: "root"
 
 end
 
@@ -34,6 +35,7 @@ EOF
 [ -z $2 ] || sed -i 's/#PORT.*/config.vm.network "forwarded_port", guest: '${2}', host: '${2}'/g' ./Vagrantfile
 
 # creating directory for puppet
+[ ! -d "manifests" ] && mkdir ./manifests
 [ ! -d ${MODULE_NAME} ] && mkdir ./"${MODULE_NAME}"
 
 
